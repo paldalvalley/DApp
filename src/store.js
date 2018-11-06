@@ -24,19 +24,27 @@ export default new Vuex.Store({
             web3Copy.coinbase = payload.coinbase
             web3Copy.balance = parseInt(payload.balance, 10)
             state.web3 = web3Copy
-            pollWeb3()
+            pollWeb3(state)
         },
         pollWeb3Instance(state, payload) {
             state.web3.coinbase = payload.coinbase
             state.web3.balance = parseInt(payload.balance, 10)
+        },
+        resetWeb3Instance(state) {
+            state.web3.web3Instance = null
+            state.web3.networkID = null
+            state.web3.coinbase = null
+            state.web3.balance = null
         }
     },
     actions: {
-        async checkWeb3({ commit }) {
-            console.log('check web3')
-            let result = await getWeb3
-            console.log(result)
-            commit('setWeb3Meta', result)
+        async checkWeb3({ commit, state }) {
+            try {
+                let result = await getWeb3
+                commit('setWeb3Meta', result)
+            } catch (err) {
+                pollWeb3(state)
+            }
         }
     }
 })
