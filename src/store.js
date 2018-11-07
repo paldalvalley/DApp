@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import getWeb3 from './utils/getWeb3'
-import pollWeb3 from "./utils/pollWeb3"
+import getWeb3 from './utils/web3/getWeb3'
+import pollWeb3 from "./utils/web3/pollWeb3"
 
 Vue.use(Vuex)
 

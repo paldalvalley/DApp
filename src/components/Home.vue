@@ -1,7 +1,12 @@
 <template>
     <div class="home">
         <img alt="Vue logo" src="../assets/logo.png">
-        <p>{{ $store.state.web3 }}</p>
+        <div v-if="$store.state.web3.web3Instance">
+            <p>{{ $store.state.web3 }}</p>
+        </div>
+        <div v-else>
+            메타마스크에 로그인 해주세요!
+        </div>
     </div>
 </template>
 
