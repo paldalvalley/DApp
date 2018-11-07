@@ -59,8 +59,8 @@
                         </b-col>
                     </b-row>
                     <b-form-radio-group id="radios2" v-model="formData.sex" name="radioSubComponent">
-                        <b-form-radio value="0">여성</b-form-radio>
-                        <b-form-radio value="1">남성</b-form-radio>
+                        <b-form-radio :value="parseInt(0)">여성</b-form-radio>
+                        <b-form-radio :value="parseInt(1)">남성</b-form-radio>
                     </b-form-radio-group>
                     <input type="submit" id="submit" value="작성">
                 </b-container>
@@ -70,7 +70,7 @@
 </template>
 
 <script>
-    import { saveOneIntoIPFS } from '../../utils/ipfs/ipfs-service'
+    import { IPFS } from '../../utils/ipfs/ipfs-service'
 
     export default {
         data () {
@@ -90,8 +90,18 @@
             triggerPostForm () {
                 this.$refs.createForm.show()
             },
-            submitForm(formData) {
+            async submitForm(formData) {
+                // * test save
+                let formInstance = Object.assign({}, formData)
+                formData.age = parseInt(formData.age)
+                formData.height = parseInt(formData.height)
+                formData.weigth = parseInt(formData.weigth)
+                console.log(await IPFS.saveObjAsFile(formInstance))
+                // need reset form
+                this.$refs.createForm.hide()
 
+                // * test load
+                // console.log(await IPFS.loadObjFromFile('QmXGQjjQKEiZDE9i7WcB8uwfQuAgEokFFQSw6KkAQvZnPM'))
             }
         },
         created () {
