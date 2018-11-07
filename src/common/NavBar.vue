@@ -11,7 +11,7 @@
                     <b-button size="sm"
                               variant="outline-dark"
                               class="nav-button"
-                              @click="foo">글작성
+                              @click="triggerPostForm">글작성
                     </b-button>
                 </b-nav-form>
 
@@ -30,8 +30,7 @@
     export default {
         name: 'nav-bar',
         methods: {
-            foo () {
-                console.log('foo')
+            triggerPostForm () {
                 this.$EventBus.$emit('postFormClicked')
             }
         }

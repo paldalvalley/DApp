@@ -70,6 +70,8 @@
 </template>
 
 <script>
+    import { saveOneIntoIPFS } from '../../utils/ipfs/ipfs-service'
+
     export default {
         data () {
             return {

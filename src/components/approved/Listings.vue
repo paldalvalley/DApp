@@ -3,10 +3,10 @@
         <b-card-group deck class="mb-3 row card-view" v-for="index in colIteration"
                       :key="index">
             <template v-if="index !== colIteration">
-                <listing class="listing-elem" v-for="rowElem in maxRowContents" :key="Date.now()"></listing>
+                <listing class="listing-elem" v-for="rowElem in maxRowContents" :key="rowElem"></listing>
             </template>
             <template v-else>
-                <listing class="listing-elem" v-for="rowElem in rowLastIteration" :key="Date.now()"></listing>
+                <listing class="listing-elem" v-for="rowElem in rowLastIteration" :key="rowElem + 100"></listing>
             </template>
 
         </b-card-group>
