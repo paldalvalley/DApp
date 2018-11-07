@@ -87,6 +87,9 @@
         methods: {
             triggerPostForm () {
                 this.$refs.createForm.show()
+            },
+            submitForm(formData) {
+
             }
         },
         created () {
