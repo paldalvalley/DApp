@@ -70,7 +70,7 @@
 </template>
 
 <script>
-    import { IPFS } from '../../utils/lib/ipfs/ipfs-service'
+    import { lib } from '../../modules/lib'
 
     export default {
         data () {
@@ -96,12 +96,12 @@
                 // formData.age = parseInt(formData.age)
                 // formData.height = parseInt(formData.height)
                 // formData.weigth = parseInt(formData.weigth)
-                // console.log(await IPFS.saveObjAsFile(formInstance))
+                // console.log(await lib.ipfsService.saveObjAsFile(formInstance))
                 // need reset form
                 // this.$refs.createForm.hide()
 
                 // * test load
-                console.log(await IPFS.loadObjFromFile('QmXGQjjQKEiZDE9i7WcB8uwfQuAgEokFFQSw6KkAQvZnPM'))
+                console.log(await lib.ipfsService.loadObjFromFile('QmXGQjjQKEiZDE9i7WcB8uwfQuAgEokFFQSw6KkAQvZnPM'))
             }
         },
         created () {
