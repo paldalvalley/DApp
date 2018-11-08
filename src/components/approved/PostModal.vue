@@ -70,7 +70,7 @@
 </template>
 
 <script>
-    import { IPFS } from '../../utils/ipfs/ipfs-service'
+    import { IPFS } from '../../utils/lib/ipfs/ipfs-service'
 
     export default {
         data () {
@@ -92,16 +92,16 @@
             },
             async submitForm(formData) {
                 // * test save
-                let formInstance = Object.assign({}, formData)
-                formData.age = parseInt(formData.age)
-                formData.height = parseInt(formData.height)
-                formData.weigth = parseInt(formData.weigth)
-                console.log(await IPFS.saveObjAsFile(formInstance))
+                // let formInstance = Object.assign({}, formData)
+                // formData.age = parseInt(formData.age)
+                // formData.height = parseInt(formData.height)
+                // formData.weigth = parseInt(formData.weigth)
+                // console.log(await IPFS.saveObjAsFile(formInstance))
                 // need reset form
-                this.$refs.createForm.hide()
+                // this.$refs.createForm.hide()
 
                 // * test load
-                // console.log(await IPFS.loadObjFromFile('QmXGQjjQKEiZDE9i7WcB8uwfQuAgEokFFQSw6KkAQvZnPM'))
+                console.log(await IPFS.loadObjFromFile('QmXGQjjQKEiZDE9i7WcB8uwfQuAgEokFFQSw6KkAQvZnPM'))
             }
         },
         created () {
