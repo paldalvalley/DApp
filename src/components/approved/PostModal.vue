@@ -111,26 +111,24 @@
             async submitForm(formData) {
                 let formInstance = this.assignFormInstance(formData)
                 let ipfsHash = await lib.ipfsService.saveObjAsFile(formInstance)
+                this.$refs.createForm.hide()
+                this.createListing(ipfsHash)
 
-                // contract area
+                // * test load
+                // let result = await lib.ipfsService.loadObjFromFile('QmXGQjjQKEiZDE9i7WcB8uwfQuAgEokFFQSw6KkAQvZnPM')
+                // console.log(result)
+            },
+            async createListing (ipfsHash) {
                 try {
-                    console.log(this.$store.state.contractInstance().methods.createListing)
                     let result = await this.contractMethods.createListing(ipfsHash).send({
                         gas: 1000000,
                         value: 0,
                         from: this.web3.coinbase
                     })
-                    console.log('result is is')
                     console.log(result)
                 } catch (err) {
-                    throw new Error(err)
+                    throw console.error(err)
                 }
-
-                this.$refs.createForm.hide()
-
-                // * test load
-                // let result = await lib.ipfsService.loadObjFromFile('QmXGQjjQKEiZDE9i7WcB8uwfQuAgEokFFQSw6KkAQvZnPM')
-                // console.log(result)
             },
             assignFormInstance (formData) {
                 let formInstance = Object.assign({}, formData)
@@ -157,7 +155,6 @@
         },
         mounted () {
             this.$EventBus.$on('postFormClicked', this.triggerPostForm)
-            this.$store.dispatch('getContractInstance')
         }
     }
 </script>

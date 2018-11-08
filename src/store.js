@@ -35,7 +35,6 @@ export default new Vuex.Store({
         },
         setContractInstance (state, payload) {
             state.contractInstance = () => payload
-            console.log('setContractInstance')
         },
         resetWeb3Instance (state) {
             state.web3.web3Instance = null
@@ -56,10 +55,9 @@ export default new Vuex.Store({
         async getContractInstance({ commit }) {
             try {
                 let result = await getContract
-                console.log(result)
                 commit('setContractInstance', result)
             } catch (err) {
-                throw new Error('Error in action getContractInstance')
+                throw console.error('Error in action getContractInstance', err)
             }
         }
     }
