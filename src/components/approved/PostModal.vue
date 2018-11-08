@@ -91,7 +91,8 @@
                     sex: -1,
                     height: 0,
                     weight: 0
-                }
+                },
+                tmpIpfsHash: ''
             }
         },
         methods: {
@@ -99,17 +100,18 @@
                 this.$refs.createForm.show()
             },
             async submitForm(formData) {
-                let formInstance = Object.assign({}, formData)
-                formData.age = parseInt(formData.age)
-                formData.height = parseInt(formData.height)
-                formData.weigth = parseInt(formData.weigth)
-                console.log(await lib.ipfsService.saveObjAsFile(formInstance))
+                let formInstance = this.assignFormInstance(formData)
+                this.tmpIpfsHash = await lib.ipfsService.saveObjAsFile(formInstance)
                 this.$refs.createForm.hide()
-                this.resetForm()
 
                 // * test load
                 // let result = await lib.ipfsService.loadObjFromFile('QmXGQjjQKEiZDE9i7WcB8uwfQuAgEokFFQSw6KkAQvZnPM')
                 // console.log(result)
+            },
+            assignFormInstance (formData) {
+                let formInstance = Object.assign({}, formData)
+                this.resetForm()
+                return this.toNumber(formInstance)
             },
             resetForm () {
                 [
@@ -121,6 +123,12 @@
                     this.formData.height,
                     this.formData.weight
                 ] = ['', '', '', 0, -1, 0, 0]
+            },
+            toNumber (formInstance) {
+                formInstance.age = parseInt(formInstance.age)
+                formInstance.height = parseInt(formInstance.height)
+                formInstance.weight = parseInt(formInstance.weight)
+                return formInstance
             }
         },
         created () {
