@@ -114,6 +114,7 @@
 
                 // contract area
                 try {
+                    console.log(this.$store.state.contractInstance().methods.createListing)
                     let result = await this.contractMethods.createListing(ipfsHash).send({
                         gas: 1000000,
                         value: 0,
@@ -122,7 +123,7 @@
                     console.log('result is is')
                     console.log(result)
                 } catch (err) {
-                    throw new Error('Error occurred')
+                    throw new Error(err)
                 }
 
                 this.$refs.createForm.hide()
@@ -156,6 +157,7 @@
         },
         mounted () {
             this.$EventBus.$on('postFormClicked', this.triggerPostForm)
+            this.$store.dispatch('getContractInstance')
         }
     }
 </script>
