@@ -22,8 +22,8 @@
         },
         methods: {
             checkSex (sex) {
-                if (sex == '0') return '여성'
-                else if (sex == '1') return '남성'
+                if (sex === 0) return '여성'
+                else if (sex === 1) return '남성'
                 else return '성별 없음'
             }
         },
