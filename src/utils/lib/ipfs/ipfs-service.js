@@ -41,7 +41,7 @@ class IpfsService {
             const result = await rawRes.json()
             return result.Hash
         } catch (err) {
-            throw new Error('Failure to submit file to IPFS', err)
+            throw console.error('Failure to submit file to IPFS', err)
         }
     }
 
@@ -59,7 +59,7 @@ class IpfsService {
         try {
             return await fetch(this.getewayUrlForHash(ipfsHash))
         } catch (err) {
-            throw new Error('Failure to get IPFS file', err)
+            throw console.error('Failure to get IPFS file', err)
         }
     }
 
