@@ -92,14 +92,17 @@
                     sex: -1,
                     height: 0,
                     weight: 0
-                },
-                tmpIpfsHash: ''
+                }
             }
         },
         computed: {
             ...mapGetters([
+                'web3',
                 'contractInstance'
-            ])
+            ]),
+            contractMethods () {
+                return this.contractInstance().methods
+            }
         },
         methods: {
             triggerPostForm () {
@@ -107,11 +110,22 @@
             },
             async submitForm(formData) {
                 let formInstance = this.assignFormInstance(formData)
-                this.tmpIpfsHash = await lib.ipfsService.saveObjAsFile(formInstance)
-                this.$refs.createForm.hide()
+                let ipfsHash = await lib.ipfsService.saveObjAsFile(formInstance)
 
                 // contract area
+                try {
+                    let result = await this.contractMethods.createListing(ipfsHash).send({
+                        gas: 1000000,
+                        value: 0,
+                        from: this.web3.coinbase
+                    })
+                    console.log('result is is')
+                    console.log(result)
+                } catch (err) {
+                    throw new Error('Error occurred')
+                }
 
+                this.$refs.createForm.hide()
 
                 // * test load
                 // let result = await lib.ipfsService.loadObjFromFile('QmXGQjjQKEiZDE9i7WcB8uwfQuAgEokFFQSw6KkAQvZnPM')
