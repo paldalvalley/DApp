@@ -80,7 +80,7 @@
 
 <script>
     import { lib } from '../../modules/lib'
-    import mapGetters from 'vuex'
+    import { mapGetters } from 'vuex'
     export default {
         data () {
             return {
