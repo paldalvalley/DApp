@@ -131,7 +131,7 @@
                 return formInstance
             }
         },
-        created () {
+        mounted () {
             this.$EventBus.$on('postFormClicked', this.triggerPostForm)
         }
     }
