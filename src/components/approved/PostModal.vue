@@ -95,6 +95,9 @@
                 tmpIpfsHash: ''
             }
         },
+        computed: {
+
+        },
         methods: {
             triggerPostForm () {
                 this.$refs.createForm.show()
@@ -103,6 +106,9 @@
                 let formInstance = this.assignFormInstance(formData)
                 this.tmpIpfsHash = await lib.ipfsService.saveObjAsFile(formInstance)
                 this.$refs.createForm.hide()
+
+                // contract area
+
 
                 // * test load
                 // let result = await lib.ipfsService.loadObjFromFile('QmXGQjjQKEiZDE9i7WcB8uwfQuAgEokFFQSw6KkAQvZnPM')

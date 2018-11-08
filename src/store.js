@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { getWeb3, pollWeb3 } from './utils/getWeb3'
+import { getContract } from './utils/getContract'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        account: null,
         web3: {
             web3Instance: null,
             networkID: null,
@@ -15,8 +15,12 @@ export default new Vuex.Store({
         },
         contractInstance: null
     },
+    getters: {
+        web3: state => state.web3,
+        contractInstance: state => state.contractInstance
+    },
     mutations: {
-        setWeb3Meta(state, payload) {
+        setWeb3Meta (state, payload) {
             let web3Copy = state.web3
             web3Copy.web3Instance = payload.web3
             web3Copy.networkID = payload.networkID
@@ -25,11 +29,14 @@ export default new Vuex.Store({
             state.web3 = web3Copy
             pollWeb3(state)
         },
-        pollWeb3Instance(state, payload) {
+        pollWeb3Instance (state, payload) {
             state.web3.coinbase = payload.coinbase
             state.web3.balance = parseInt(payload.balance, 10)
         },
-        resetWeb3Instance(state) {
+        setContractInstance (state, payload) {
+            state.contractInstance = () => payload
+        },
+        resetWeb3Instance (state) {
             state.web3.web3Instance = null
             state.web3.networkID = null
             state.web3.coinbase = null
@@ -43,6 +50,14 @@ export default new Vuex.Store({
                 commit('setWeb3Meta', result)
             } catch (err) {
                 pollWeb3(state)
+            }
+        },
+        async getContractInstance({ commit }) {
+            try {
+                let result = await getContract
+                commit('setContractInstance', result)
+            } catch (err) {
+                throw new Error('Error in action getContractInstance')
             }
         }
     }

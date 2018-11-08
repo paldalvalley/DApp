@@ -10,9 +10,15 @@
 </template>
 
 <script>
+    import mapGetters from 'vuex'
     import Approved from '@/components/approved/Approved'
     export default {
         name: 'home',
+        computed: {
+            ...mapGetters([
+
+            ])
+        },
         components: {
             Approved
         }
