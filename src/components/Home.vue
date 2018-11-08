@@ -1,6 +1,6 @@
 <template>
     <div class="home">
-        <div v-if="$store.state.web3.web3Instance">
+        <div v-if="web3.web3Instance">
             <approved/>
         </div>
         <div v-else>
@@ -16,7 +16,7 @@
         name: 'home',
         computed: {
             ...mapGetters([
-
+                'web3'
             ])
         },
         components: {
