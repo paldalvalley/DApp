@@ -3,15 +3,18 @@
         <b-card-group deck class="mb-3 row card-view" v-for="index in colIteration"
                       :key="index">
             <template v-if="index !== colIteration">
-                <listing class="listing-elem" v-for="rowElem in maxRowContents" :key="rowElem"></listing>
+                <!-- computed로 받을 수는 없을까 생각 -->
+                <listing class="listing-elem" v-for="rowElem in maxRowContents"
+                                              :key="listingArray[rowElem + (maxRowContents * (index - 1)) - 1].listingID"
+                                              :listingID="listingArray[rowElem + (maxRowContents * (index - 1)) - 1].listingID"></listing>
             </template>
             <template v-else>
-                <listing class="listing-elem" v-for="rowElem in rowLastIteration" :key="rowElem + 100"></listing>
+                <listing class="listing-elem" v-for="rowElem in rowLastIteration"
+                                              :key="listingArray[rowElem + (maxRowContents * (index - 1)) - 1].listingID"
+                                              :listingID="listingArray[rowElem + (maxRowContents * (index - 1)) - 1].listingID"></listing>
             </template>
 
         </b-card-group>
-        <button @click="$store.dispatch('loadAllListings')">확인</button>
-        {{ $store.state.listingArray[0] }}
     </div>
 </template>
 
@@ -22,36 +25,20 @@
         name: 'listings',
         data () {
             return {
-                foos: [
-                    {
-                        name: 'a'
-                    },
-                    {
-                        name: 'b'
-                    },
-                    {
-                        name: 'c'
-                    },
-                    {
-                        name: 'd'
-                    },
-                    {
-                        name: 'e'
-                    }
-                ],
                 maxRowContents: 3,
                 iterationFlag: 0
             }
         },
         computed: {
             ...mapGetters([
-                'contractInstance'
+                'contractInstance',
+                'listingArray'
             ]),
             colIteration () {
-                return Math.ceil(this.foos.length / this.maxRowContents)
+                return Math.ceil(this.listingArray.length / this.maxRowContents)
             },
             rowLastIteration () {
-                return this.foos.length % this.maxRowContents
+                return this.listingArray.length % this.maxRowContents
             }
         },
         methods: {

@@ -69,6 +69,8 @@ export default new Vuex.Store({
         /**
          * TODO: 현재는 ListingCreated event만 고려.
          * 향후 ListingUpdated 등의 event에 대한 처리도 필요
+         *
+         * 글 게시할 시에 실시간 반영 문제
          * */
         async loadAllListings ({ commit, state }) {
             let listingArray = []

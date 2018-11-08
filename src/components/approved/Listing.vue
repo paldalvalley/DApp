@@ -1,11 +1,36 @@
 <template>
-    <b-card border-variant="dark" header="제목" align="center">
-        <p class="card-text">유저 정보</p>
+    <b-card border-variant="dark" :header="data.title" align="center">
+        <p class="card-text">닉네임: {{ data.nickname }}</p>
+        <p class="card-text">성별: {{ checkSex(data.sex) }}</p>
+        <p class="card-text">나이: {{ data.age}}</p>
+        <p class="card-text">키: {{ data.height }}</p>
+        <p class="card-text">몸무게: {{ data.weight }}</p>
     </b-card>
 </template>
 
 <script>
+    import { mapGetters } from 'vuex'
     export default {
-        name: 'listing'
+        name: 'listing',
+        computed: {
+            ...mapGetters([
+                'listingArray'
+            ]),
+            data () {
+                return this.listingArray[this.listingID].data
+            }
+        },
+        methods: {
+            checkSex (sex) {
+                if (sex == '0') return '여성'
+                else if (sex == '1') return '남성'
+                else return '성별 없음'
+            }
+        },
+        props: {
+            listingID: {
+                type: String
+            }
+        }
     }
 </script>
