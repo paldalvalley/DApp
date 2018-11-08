@@ -1,17 +1,19 @@
 <template>
     <div class="container">
         <b-card-group deck class="mb-3 row card-view" v-for="index in colIteration"
-                      :key="index">
-            <template v-show="index !== colIteration">
+                                                      :key="index">
+            <template v-if="index !== colIteration || !rowLastIteration">
                 <!-- computed로 받을 수는 없을까 생각 -->
                 <listing class="listing-elem" v-for="rowElem in maxRowContents"
                                               :key="listingArray[rowElem + (maxRowContents * (index - 1)) - 1].listingID"
-                                              :listingID="listingArray[rowElem + (maxRowContents * (index - 1)) - 1].listingID"></listing>
+                                              :listingID="listingArray[rowElem + (maxRowContents * (index - 1)) - 1].listingID">
+                </listing>
             </template>
-            <template v-show="index === colIteration">
+            <template v-else>
                 <listing class="listing-elem" v-for="rowElem in rowLastIteration"
                                               :key="listingArray[rowElem + (maxRowContents * (index - 1)) - 1].listingID"
-                                              :listingID="listingArray[rowElem + (maxRowContents * (index - 1)) - 1].listingID"></listing>
+                                              :listingID="listingArray[rowElem + (maxRowContents * (index - 1)) - 1].listingID">
+                </listing>
             </template>
         </b-card-group>
     </div>
@@ -24,8 +26,7 @@
         name: 'listings',
         data () {
             return {
-                maxRowContents: 3,
-                iterationFlag: 0
+                maxRowContents: 3
             }
         },
         computed: {

@@ -1,4 +1,4 @@
-import Lib from '../utils/lib/index'
+import Lib from '../utils/lib'
 
 const lib = new Lib()
 
