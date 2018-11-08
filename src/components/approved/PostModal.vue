@@ -48,6 +48,15 @@
                         </b-col>
                     </b-row>
                     <b-row class="my-1">
+                        <b-col sm="2"><label for="input-title">제목:</label></b-col>
+                        <b-col sm="9">
+                            <b-form-input id="input-title"
+                                          type="text"
+                                          v-model="formData.title">
+                            </b-form-input>
+                        </b-col>
+                    </b-row>
+                    <b-row class="my-1">
                         <b-col sm="2"><label for="input-invalid">내용:</label></b-col>
                         <b-col sm="9">
                             <b-form-textarea id="report-desc"
@@ -92,16 +101,16 @@
             },
             async submitForm(formData) {
                 // * test save
-                // let formInstance = Object.assign({}, formData)
-                // formData.age = parseInt(formData.age)
-                // formData.height = parseInt(formData.height)
-                // formData.weigth = parseInt(formData.weigth)
-                // console.log(await lib.ipfsService.saveObjAsFile(formInstance))
+                let formInstance = Object.assign({}, formData)
+                formData.age = parseInt(formData.age)
+                formData.height = parseInt(formData.height)
+                formData.weigth = parseInt(formData.weigth)
+                console.log(await lib.ipfsService.saveObjAsFile(formInstance))
                 // need reset form
-                // this.$refs.createForm.hide()
+                this.$refs.createForm.hide()
 
                 // * test load
-                console.log(await lib.ipfsService.loadObjFromFile('QmXGQjjQKEiZDE9i7WcB8uwfQuAgEokFFQSw6KkAQvZnPM'))
+                // console.log(await lib.ipfsService.loadObjFromFile('QmXGQjjQKEiZDE9i7WcB8uwfQuAgEokFFQSw6KkAQvZnPM'))
             }
         },
         created () {
