@@ -30,7 +30,7 @@ class IpfsService {
         try {
             const formData = new FormData()
             formData.append('file', file)
-            const rawRes = await fetch(`${IPFS_CONST.api}/api/v0/add`, {
+            const rawRes = await fetch(`${this.api}/api/v0/add`, {
                 method: 'POST',
                 body: formData
             })
@@ -59,7 +59,7 @@ class IpfsService {
     }
 
     getewayUrlForHash (ipfsHashStr) {
-        return `${IPFS_CONST.gateway}/ipfs/${ipfsHashStr}`
+        return `${this.gateway}/ipfs/${ipfsHashStr}`
     }
 }
 
