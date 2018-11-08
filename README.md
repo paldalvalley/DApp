@@ -1,16 +1,16 @@
-# client
+# DApp
 
-## Project setup
+## 설치
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### 실행
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### 프로덕션 빌드
 ```
 npm run build
 ```
