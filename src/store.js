@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import { lib } from './modules/lib'
 import { getWeb3, pollWeb3 } from './utils/getWeb3'
 import { getContract } from './utils/getContract'
 
@@ -13,11 +14,13 @@ export default new Vuex.Store({
             coinbase: null,
             balance: null
         },
-        contractInstance: null
+        contractInstance: null,
+        listingArray: []
     },
     getters: {
         web3: state => state.web3,
-        contractInstance: state => state.contractInstance
+        contractInstance: state => state.contractInstance,
+        listingArray: state => state.listingArray
     },
     mutations: {
         setWeb3Meta (state, payload) {
@@ -41,6 +44,9 @@ export default new Vuex.Store({
             state.web3.networkID = null
             state.web3.coinbase = null
             state.web3.balance = null
+        },
+        setListingArray (state, payload) {
+            state.listingArray = payload
         }
     },
     actions: {
@@ -59,6 +65,32 @@ export default new Vuex.Store({
             } catch (err) {
                 throw console.error('Error in action getContractInstance', err)
             }
+        },
+        /**
+         * TODO: 현재는 ListingCreated event만 고려.
+         * 향후 ListingUpdated 등의 event에 대한 처리도 필요
+         * */
+        async loadAllListings ({ commit, state }) {
+            let listingArray = []
+            let events = await state.contractInstance().getPastEvents('ListingCreated', {
+                fromBlock: 0,
+                toBlock: 'latest'
+            })
+
+            for (let i in events) {
+                let listingData = events[i].returnValues
+                let obj = Object.assign(
+                    { listingID: listingData.listingID },
+                    { ipfsHash: listingData.ipfsHash },
+                    { party: listingData.party })
+                listingArray.push(obj)
+            }
+
+            for (let i in listingArray) {
+                listingArray[i].data = await lib.ipfsService.loadObjFromFile(listingArray[i].ipfsHash)
+            }
+
+            commit('setListingArray', listingArray)
         }
     }
 })

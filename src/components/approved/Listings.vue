@@ -10,11 +10,14 @@
             </template>
 
         </b-card-group>
+        <button @click="$store.dispatch('loadAllListings')">확인</button>
+        {{ $store.state.listingArray[0] }}
     </div>
 </template>
 
 <script>
     import Listing from './Listing'
+    import { mapGetters } from 'vuex'
     export default {
         name: 'listings',
         data () {
@@ -41,6 +44,9 @@
             }
         },
         computed: {
+            ...mapGetters([
+                'contractInstance'
+            ]),
             colIteration () {
                 return Math.ceil(this.foos.length / this.maxRowContents)
             },
@@ -48,8 +54,13 @@
                 return this.foos.length % this.maxRowContents
             }
         },
+        methods: {
+        },
         components: {
             Listing
+        },
+        beforeCreate() {
+            this.$store.dispatch('loadAllListings')
         }
     }
 </script>
