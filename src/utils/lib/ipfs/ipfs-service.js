@@ -23,6 +23,9 @@ class IpfsService {
         }
 
         const ipfsHash = await this.saveFile(file)
+
+        // Caching
+        this.mapCache.set(ipfsHash, obj)
         return ipfsHash
     }
 
@@ -34,7 +37,7 @@ class IpfsService {
                 method: 'POST',
                 body: formData
             })
-            // await why?
+
             const result = await rawRes.json()
             return result.Hash
         } catch (err) {
@@ -43,8 +46,12 @@ class IpfsService {
     }
 
     async loadObjFromFile (ipfsHash) {
+        if(this.mapCache.has(ipfsHash)) {
+            return this.mapCache.get(ipfsHash)
+        }
         const response = await this.loadFile(ipfsHash)
         const obj = response.json()
+        this.mapCache.set(ipfsHash, obj)
         return obj
     }
 
