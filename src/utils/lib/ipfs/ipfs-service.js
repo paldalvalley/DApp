@@ -57,9 +57,7 @@ class IpfsService {
 
     async loadFile (ipfsHash) {
         try {
-            let blob = await fetch(this.getewayUrlForHash(ipfsHash))
-            console.log(blob)
-            return blob
+            return await fetch(this.getewayUrlForHash(ipfsHash))
         } catch (err) {
             throw new Error('Failure to get IPFS file', err)
         }

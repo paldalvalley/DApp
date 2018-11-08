@@ -15,9 +15,9 @@
                         </b-col>
                     </b-row>
                     <b-row class="my-1">
-                        <b-col sm="2"><label for="input-valid">나이({{ formData.age }}):</label></b-col>
+                        <b-col sm="2"><label for="input-age">나이({{ formData.age }}):</label></b-col>
                         <b-col sm="9">
-                            <b-form-input id="input-valid"
+                            <b-form-input id="input-age"
                                           type="range"
                                           min="13"
                                           max="100"
@@ -26,9 +26,9 @@
                         </b-col>
                     </b-row>
                     <b-row class="my-1">
-                        <b-col sm="2"><label for="input-valid">키({{ formData.height }}):</label></b-col>
+                        <b-col sm="2"><label for="input-height">키({{ formData.height }}):</label></b-col>
                         <b-col sm="9">
-                            <b-form-input id="input-valid"
+                            <b-form-input id="input-height"
                                           type="range"
                                           min="140"
                                           max="200"
@@ -37,9 +37,9 @@
                         </b-col>
                     </b-row>
                     <b-row class="my-1">
-                        <b-col sm="2"><label for="input-valid">몸무게({{ formData.weight }}):</label></b-col>
+                        <b-col sm="2"><label for="input-weight">몸무게({{ formData.weight }}):</label></b-col>
                         <b-col sm="9">
-                            <b-form-input id="input-valid"
+                            <b-form-input id="input-weight"
                                           type="range"
                                           min="30"
                                           max="200"
@@ -57,7 +57,7 @@
                         </b-col>
                     </b-row>
                     <b-row class="my-1">
-                        <b-col sm="2"><label for="input-invalid">내용:</label></b-col>
+                        <b-col sm="2"><label for="input-desc">내용:</label></b-col>
                         <b-col sm="9">
                             <b-form-textarea id="report-desc"
                                              placeholder="다이어트에 관한 내용을 상세히 입력해주세요."
@@ -67,7 +67,7 @@
                             </b-form-textarea>
                         </b-col>
                     </b-row>
-                    <b-form-radio-group id="radios2" v-model="formData.sex" name="radioSubComponent">
+                    <b-form-radio-group id="radios" v-model="formData.sex" name="radioSubComponent">
                         <b-form-radio :value="parseInt(0)">여성</b-form-radio>
                         <b-form-radio :value="parseInt(1)">남성</b-form-radio>
                     </b-form-radio-group>
@@ -80,7 +80,6 @@
 
 <script>
     import { lib } from '../../modules/lib'
-
     export default {
         data () {
             return {
@@ -100,17 +99,28 @@
                 this.$refs.createForm.show()
             },
             async submitForm(formData) {
-                // * test save
                 let formInstance = Object.assign({}, formData)
                 formData.age = parseInt(formData.age)
                 formData.height = parseInt(formData.height)
                 formData.weigth = parseInt(formData.weigth)
                 console.log(await lib.ipfsService.saveObjAsFile(formInstance))
-                // need reset form
                 this.$refs.createForm.hide()
+                this.resetForm()
 
                 // * test load
-                // console.log(await lib.ipfsService.loadObjFromFile('QmXGQjjQKEiZDE9i7WcB8uwfQuAgEokFFQSw6KkAQvZnPM'))
+                // let result = await lib.ipfsService.loadObjFromFile('QmXGQjjQKEiZDE9i7WcB8uwfQuAgEokFFQSw6KkAQvZnPM')
+                // console.log(result)
+            },
+            resetForm () {
+                [
+                    this.formData.title,
+                    this.formData.description,
+                    this.formData.nickname,
+                    this.formData.age,
+                    this.formData.sex,
+                    this.formData.height,
+                    this.formData.weight
+                ] = ['', '', '', 0, -1, 0, 0]
             }
         },
         created () {
