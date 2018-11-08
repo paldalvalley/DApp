@@ -80,6 +80,7 @@
 
 <script>
     import { lib } from '../../modules/lib'
+    import mapGetters from 'vuex'
     export default {
         data () {
             return {
@@ -96,7 +97,9 @@
             }
         },
         computed: {
-
+            ...mapGetters([
+                'contractInstance'
+            ])
         },
         methods: {
             triggerPostForm () {
