@@ -32,7 +32,7 @@ export default new Vuex.Store({
             state.web3 = web3Copy
             pollWeb3(state)
         },
-        pollWeb3Instance (state, payload) {
+        changeCoinbase (state, payload) {
             state.web3.coinbase = payload.coinbase
             state.web3.balance = parseInt(payload.balance, 10)
         },
