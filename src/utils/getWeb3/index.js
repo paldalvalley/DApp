@@ -1,10 +1,10 @@
 import Web3 from 'web3'
 import store from '../../store'
 
-export const getWeb3 = new Promise((resolve, reject) => {
+export const getWeb3 = new Promise(async (resolve, reject) => {
     let isUserConnected;
     const web3 = new Web3(window.web3.currentProvider)
-    const coinbase = web3.eth.getAccounts()[0]
+    const coinbase = (await web3.eth.getAccounts())[0]
     typeof coinbase === 'undefined'
     ? isUserConnected = false
     : isUserConnected = true

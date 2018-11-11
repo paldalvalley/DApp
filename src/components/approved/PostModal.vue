@@ -6,9 +6,9 @@
             <form @submit.prevent="submitForm(formData)">
                 <b-container fluid>
                     <b-row class="my-1">
-                        <b-col sm="2"><label for="input-none">닉네임:</label></b-col>
+                        <b-col sm="2"><label for="input-nickname">닉네임:</label></b-col>
                         <b-col sm="9">
-                            <b-form-input id="input-none"
+                            <b-form-input id="input-nickname"
                                           type="text"
                                           v-model="formData.nickname">
                             </b-form-input>
