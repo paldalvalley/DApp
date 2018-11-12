@@ -12,9 +12,6 @@ export default new Vuex.Store({
     state: {
         listingArray: []
     },
-    getters: {
-        listingArray: state => state.listingArray
-    },
     mutations: {
         setListingArray (state, payload) {
             state.listingArray = payload
