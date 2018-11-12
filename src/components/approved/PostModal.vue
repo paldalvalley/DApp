@@ -132,19 +132,17 @@
             },
             assignFormInstance (formData) {
                 let formInstance = Object.assign({}, formData)
-                this.resetForm()
+                this.clearForm()
                 return this.toNumber(formInstance)
             },
-            resetForm () {
-                [
-                    this.formData.title,
-                    this.formData.description,
-                    this.formData.nickname,
-                    this.formData.age,
-                    this.formData.sex,
-                    this.formData.height,
-                    this.formData.weight
-                ] = ['', '', '', 0, -1, 0, 0]
+            clearForm () {
+                    this.formData.title = ''
+                    this.formData.description = ''
+                    this.formData.nickname = ''
+                    this.formData.age = 0
+                    this.formData.sex = -1
+                    this.formData.height = 0
+                    this.formData.weight = 0
             },
             toNumber (formInstance) {
                 formInstance.age = parseInt(formInstance.age)
