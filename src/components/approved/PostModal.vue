@@ -68,8 +68,8 @@
                         </b-col>
                     </b-row>
                     <b-form-radio-group id="radios" v-model="formData.sex" name="radioSubComponent">
-                        <b-form-radio :value="parseInt(0)">여성</b-form-radio>
-                        <b-form-radio :value="parseInt(1)">남성</b-form-radio>
+                        <b-form-radio :value="0">여성</b-form-radio>
+                        <b-form-radio :value="1">남성</b-form-radio>
                     </b-form-radio-group>
                     <input type="submit" id="submit" value="작성">
                 </b-container>

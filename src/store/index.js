@@ -1,12 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { blockSync, listing } from './modules'
+import { blockSync, listing, search } from './modules'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
     modules: {
         blockSync,
-        listing
+        listing,
+        search
     }
 })
