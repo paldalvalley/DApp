@@ -80,7 +80,7 @@
 
 <script>
     import { lib } from '../../modules/lib'
-    import { mapGetters } from 'vuex'
+    import { mapState } from 'vuex'
     export default {
         data () {
             return {
@@ -96,7 +96,7 @@
             }
         },
         computed: {
-            ...mapGetters([
+            ...mapState('blockSync', [
                 'web3',
                 'contractInstance'
             ]),

@@ -21,7 +21,7 @@
 
 <script>
     import Listing from './Listing'
-    import { mapGetters } from 'vuex'
+    import { mapState } from 'vuex'
     export default {
         name: 'listings',
         data () {
@@ -30,10 +30,10 @@
             }
         },
         computed: {
-            ...mapGetters([
-                'contractInstance',
-                'listingArray'
-            ]),
+            ...mapState({
+                contractInstance: state => state.blockSync.contractInstance,
+                listingArray: state => state.listingArray
+            }),
             colIteration () {
                 return Math.ceil(this.listingArray.length / this.maxRowContents)
             },

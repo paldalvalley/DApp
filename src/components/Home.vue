@@ -10,12 +10,12 @@
 </template>
 
 <script>
-    import { mapGetters } from 'vuex'
+    import { mapState } from 'vuex'
     import Approved from '@/components/approved/Approved'
     export default {
         name: 'home',
         computed: {
-            ...mapGetters([
+            ...mapState('blockSync', [
                 'web3'
             ])
         },
