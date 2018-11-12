@@ -32,7 +32,7 @@
         computed: {
             ...mapState({
                 contractInstance: state => state.blockSync.contractInstance,
-                listingArray: state => state.listingArray
+                listingArray: state => state.listing.listingArray
             }),
             colIteration () {
                 return Math.ceil(this.listingArray.length / this.maxRowContents)
@@ -47,7 +47,7 @@
             Listing
         },
         beforeCreate() {
-            this.$store.dispatch('loadAllListings')
+            this.$store.dispatch('listing/loadAllListings')
         }
     }
 </script>

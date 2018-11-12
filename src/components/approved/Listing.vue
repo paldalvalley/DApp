@@ -13,7 +13,7 @@
     export default {
         name: 'listing',
         computed: {
-            ...mapState([
+            ...mapState('listing', [
                 'listingArray'
             ]),
             data () {
