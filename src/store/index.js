@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { lib } from './modules/lib'
-import { getWeb3, pollWeb3 } from './utils/getWeb3'
-import { getContract } from './utils/getContract'
+import { lib } from '../modules/lib'
+import { getWeb3, pollWeb3 } from '../utils/getWeb3/index'
+import { getContract } from '../utils/getContract/index'
 
 Vue.use(Vuex)
 
