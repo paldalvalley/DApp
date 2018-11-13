@@ -24,6 +24,8 @@ export const listingPlugin = store => {
             listingArray[i].data = await lib.ipfsService.loadObjFromFile(listingArray[i].ipfsHash)
         }
 
+        console.log(listingArray)
+
         return listingArray
     }
 }

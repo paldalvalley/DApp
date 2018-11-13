@@ -81,11 +81,11 @@
         },
         methods: {
             ...mapActions('search', [
-                'submitSearchForm'
+                'loadSearchedListings'
             ]),
             async submitForm(formData) {
                 this.setDefault(formData)
-                await this.submitSearchForm(formData)
+                await this.loadSearchedListings(formData)
 
                 this.clearForm()
             },

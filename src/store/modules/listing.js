@@ -1,5 +1,3 @@
-import {lib} from "../../modules/lib";
-
 const state = {
     listingArray: []
 }

@@ -1,8 +1,9 @@
 import axios from 'axios'
 
 const actions = {
-    async submitSearchForm({ commit, rootState  }, formData) {
-        let url = `http://13.209.8.64:3000/api/search`
+    async loadSearchedListings({ commit }, formData) {
+        const url = `http://13.209.8.64:3000/api/search`
+        const eventName = 'ListingCreated'
 
         try {
             // ajax to database server
@@ -19,23 +20,10 @@ const actions = {
 
             console.log(data)
 
-            let searchedEvents = await rootState.blockSync
-                .contractInstance()
-                .getPastEvents('ListingCreated', {
-                    filter: { listingID: data },
-                    fromBlock: 0,
-                    toBlock: 'latest'
-                })
+            const filter = { listingID: data }
+            const listingArray = await this.getEventsFromBlock(eventName, filter)
 
-            for (let i in searchedEvents) {
-                let listingData = allEvents[i].returnValues
-                let obj = Object.assign(
-                    { listingID: listingData.listingID },
-                    { ipfsHash: listingData.ipfsHash },
-                    { party: listingData.party })
-                listingArray.push(obj)
-            }
-
+            commit('listing/setListingArray', listingArray, { root: true })
         } catch (err) {
             throw err
         }
