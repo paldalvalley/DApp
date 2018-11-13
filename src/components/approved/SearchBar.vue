@@ -32,12 +32,12 @@
                 <b-col sm="2"><label for="input-height">신장:</label></b-col>
                 <b-row sm="9">
                     <b-form-input id="input-height-from"
-                                  type="text"
-                                  v-model="formData.height.from">
+                                  type="number"
+                                  v-model.number="formData.height.from">
                     </b-form-input>
                     <b-form-input id="input-height-to"
-                                  type="text"
-                                  v-model="formData.height.to">
+                                  type="number"
+                                  v-model.number="formData.height.to">
                     </b-form-input>
                 </b-row>
             </b-row>
@@ -46,12 +46,12 @@
                 <b-col sm="2"><label for="input-weight">몸무게:</label></b-col>
                 <b-row sm="9">
                     <b-form-input id="input-weight-from"
-                                  type="text"
-                                  v-model="formData.weight.from">
+                                  type="number"
+                                  v-model.number="formData.weight.from">
                     </b-form-input>
                     <b-form-input id="input-weight-to"
-                                  type="text"
-                                  v-model="formData.weight.to">
+                                  type="number"
+                                  v-model.number="formData.weight.to">
                     </b-form-input>
                 </b-row>
             </b-row>
@@ -96,12 +96,12 @@
                 'submitSearchForm'
             ]),
             async submitForm(formData) {
-                this.toNumber(formData)
-                this.submitSearchForm(formData)
+                this.setDefault(formData)
+                await this.submitSearchForm(formData)
+
                 this.clearForm()
             },
             clearForm() {
-                // default 값 설정하는 미들웨어 만들기
                 this.ageSelected = null
                 this.sexSelected = null
                 this.formData.height.from = null
@@ -109,11 +109,13 @@
                 this.formData.weight.from = null
                 this.formData.weight.to = null
             },
-            toNumber (formData) {
-                formData.height.from = parseInt(formData.height.from)
-                formData.height.to = parseInt(formData.height.to)
-                formData.weight.from = parseInt(formData.weight.from)
-                formData.weight.to = parseInt(formData.weight.to)
+            setDefault (formData) {
+                if (!formData.ageSelected) formData.ageSelected = -1
+                if (!formData.sexSelected) formData.sexSelected = -1
+                if (!formData.height.from) formData.height.from = 0
+                if (!formData.height.to) formData.height.to = 300
+                if (!formData.weight.from) formData.weight.from = 0
+                if (!formData.weight.to) formData.weight.to = 200
             }
         }
     }

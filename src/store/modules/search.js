@@ -1,17 +1,9 @@
 import axios from 'axios'
 
-const state = {
-
-}
-
-const mutations = {
-
-}
-
 const actions = {
     async submitSearchForm({ commit }, formData) {
-        let url = `http://192.168.0.33:3000/api/search`
-        console.log(formData)
+        let url = `http://13.209.8.64:3000/api/search`
+
         try {
             const { data } = await axios.post(url, {
                 content: {
@@ -32,7 +24,5 @@ const actions = {
 
 export default {
     namespaced: true,
-    state,
-    mutations,
     actions
 }
