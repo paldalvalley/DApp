@@ -21,7 +21,7 @@
                                           type="range"
                                           min="13"
                                           max="100"
-                                          v-model="formData.age">
+                                          v-model.number="formData.age">
                             </b-form-input>
                         </b-col>
                     </b-row>
@@ -32,7 +32,7 @@
                                           type="range"
                                           min="140"
                                           max="200"
-                                          v-model="formData.height">
+                                          v-model.number="formData.height">
                             </b-form-input>
                         </b-col>
                     </b-row>
@@ -43,7 +43,7 @@
                                           type="range"
                                           min="30"
                                           max="200"
-                                          v-model="formData.weight">
+                                          v-model.number="formData.weight">
                             </b-form-input>
                         </b-col>
                     </b-row>
@@ -109,7 +109,7 @@
                 this.$refs.createForm.show()
             },
             async submitForm(formData) {
-                let formInstance = this.assignFormInstance(formData)
+                let formInstance = assignFormInstance(formData)
                 let ipfsHash = await lib.ipfsService.saveObjAsFile(formInstance)
                 this.$refs.createForm.hide()
                 this.createListing(ipfsHash)
@@ -133,7 +133,7 @@
             assignFormInstance (formData) {
                 let formInstance = Object.assign({}, formData)
                 this.clearForm()
-                return this.toNumber(formInstance)
+                return formInstance
             },
             clearForm () {
                     this.formData.title = ''
@@ -143,12 +143,6 @@
                     this.formData.sex = -1
                     this.formData.height = 0
                     this.formData.weight = 0
-            },
-            toNumber (formInstance) {
-                formInstance.age = parseInt(formInstance.age)
-                formInstance.height = parseInt(formInstance.height)
-                formInstance.weight = parseInt(formInstance.weight)
-                return formInstance
             }
         },
         mounted () {

@@ -57,18 +57,6 @@
             </b-row>
             <input type="submit" id="submit" value="검색">
         </form>
-        {{ formData.ageSelected }}
-        {{ typeof formData.ageSelected }}
-        {{ formData.sexSelected }}
-        {{ typeof formData.sexSelected }}
-        {{ formData.height.from }}
-        {{ typeof formData.height.from }}
-        {{ formData.height.to }}
-        {{ typeof formData.height.to }}
-        {{ formData.weight.from }}
-        {{ typeof formData.weight.from }}
-        {{ formData.weight.to }}
-        {{ typeof formData.weight.to }}
     </div>
 </template>
 
