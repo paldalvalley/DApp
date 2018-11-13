@@ -28,7 +28,6 @@
             }
         },
         props: {
-            // listing id : 2, 3
             listingIdx: {
                 type: Number
             }

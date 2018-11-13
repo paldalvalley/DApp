@@ -4,7 +4,12 @@ const actions = {
     async loadSearchedListings({ commit }, formData) {
         const url = `http://13.209.8.64:3000/api/search`
         const eventName = 'ListingCreated'
-
+        console.log(formData.ageSelected)
+        console.log(formData.sexSelected)
+        console.log(formData.height.from)
+        console.log(formData.height.to)
+        console.log(formData.weight.from)
+        console.log(formData.weight.to)
         try {
             // ajax req to database server
             // get listing id from database
@@ -20,12 +25,17 @@ const actions = {
             })
 
             console.log(data)
+
             // get listing ipfs hash from blockchain with listing id
             // and get listing data from IPFS with ipfs hash
-            const filter = { listingID: data }
-            const listingArray = await this.getEventsFromBlock(eventName, filter)
-
-            commit('listing/setListingArray', listingArray, { root: true })
+            let listingArray
+            if(data.length) {
+                const filter = {listingID: data}
+                listingArray = await this.getEventsFromBlock(eventName, filter)
+            } else {
+                listingArray = []
+            }
+            commit('listing/setListingArray', listingArray, {root: true})
         } catch (err) {
             throw err
         }

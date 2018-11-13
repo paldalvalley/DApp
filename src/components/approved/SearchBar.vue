@@ -98,8 +98,8 @@
                 this.formData.weight.to = null
             },
             setDefault (formData) {
-                if (!formData.ageSelected) formData.ageSelected = -1
-                if (!formData.sexSelected) formData.sexSelected = -1
+                if (formData.ageSelected === null) formData.ageSelected = -1
+                if (formData.sexSelected === null) formData.sexSelected = -1
                 if (!formData.height.from) formData.height.from = 0
                 if (!formData.height.to) formData.height.to = 300
                 if (!formData.weight.from) formData.weight.from = 0
