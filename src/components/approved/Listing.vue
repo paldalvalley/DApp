@@ -17,7 +17,7 @@
                 'listingArray'
             ]),
             data () {
-                return this.listingArray[this.listingID].data
+                return this.listingArray[this.listingIdx].data
             }
         },
         methods: {
@@ -28,8 +28,9 @@
             }
         },
         props: {
-            listingID: {
-                type: String
+            // listing id : 2, 3
+            listingIdx: {
+                type: Number
             }
         }
     }

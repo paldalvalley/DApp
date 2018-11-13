@@ -6,7 +6,8 @@ const actions = {
         const eventName = 'ListingCreated'
 
         try {
-            // ajax to database server
+            // ajax req to database server
+            // get listing id from database
             const { data } = await axios.post(url, {
                 content: {
                     age: formData.ageSelected,
@@ -19,7 +20,8 @@ const actions = {
             })
 
             console.log(data)
-
+            // get listing ipfs hash from blockchain with listing id
+            // and get listing data from IPFS with ipfs hash
             const filter = { listingID: data }
             const listingArray = await this.getEventsFromBlock(eventName, filter)
 

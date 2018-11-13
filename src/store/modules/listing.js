@@ -18,6 +18,7 @@ const actions = {
     async loadAllListings ({ commit }) {
         const eventName = 'ListingCreated'
         const listingArray = await this.getEventsFromBlock(eventName)
+        // const listingArray = await this.getEventsFromBlock(eventName, { listingID: [2, 3] })
 
         commit('setListingArray', listingArray)
     }
