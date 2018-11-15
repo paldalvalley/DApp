@@ -109,7 +109,7 @@
                 this.$refs.createForm.show()
             },
             async submitForm(formData) {
-                let formInstance = assignFormInstance(formData)
+                let formInstance = this.assignFormInstance(formData)
                 let ipfsHash = await lib.ipfsService.saveObjAsFile(formInstance)
                 this.$refs.createForm.hide()
                 this.createListing(ipfsHash)
