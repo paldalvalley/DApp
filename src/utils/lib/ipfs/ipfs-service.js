@@ -5,7 +5,7 @@ import { IPFS_CONST } from './constants'
 
 /**
  * reason for using async function: to use try catch
- * */
+ **/
 
 class IpfsService {
     constructor() {

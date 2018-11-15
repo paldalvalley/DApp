@@ -4,12 +4,6 @@ const actions = {
     async loadSearchedListings({ commit }, formData) {
         const url = `http://13.209.8.64:3000/api/search`
         const eventName = 'ListingCreated'
-        console.log(formData.ageSelected)
-        console.log(formData.sexSelected)
-        console.log(formData.height.from)
-        console.log(formData.height.to)
-        console.log(formData.weight.from)
-        console.log(formData.weight.to)
         try {
             // ajax req to database server
             // get listing id from database
@@ -35,7 +29,7 @@ const actions = {
             } else {
                 listingArray = []
             }
-            commit('listing/setListingArray', listingArray, {root: true})
+            commit('listing/setListingArray', listingArray, { root: true })
         } catch (err) {
             throw err
         }

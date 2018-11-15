@@ -39,7 +39,7 @@ const mutations = {
 const actions = {
     async checkWeb3({ commit, state }) {
         try {
-            let result = await getWeb3
+            let result = await getWeb3()
             commit('setWeb3Meta', result)
         } catch (err) {
             pollWeb3(state)

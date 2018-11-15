@@ -1,8 +1,8 @@
 import Web3 from 'web3'
 import store from '../../store'
 
-export const getWeb3 = new Promise(async (resolve, reject) => {
-    let isUserConnected;
+export const getWeb3 = async () => {
+    let isUserConnected, result
     const web3 = new Web3(window.web3.currentProvider)
     const coinbase = (await web3.eth.getAccounts())[0]
     typeof coinbase === 'undefined'
@@ -10,38 +10,21 @@ export const getWeb3 = new Promise(async (resolve, reject) => {
     : isUserConnected = true
 
     if (isUserConnected) {
-        resolve({
-            web3() {
-                return web3
-            },
-            coinbase
-        })
+        result = { web3 () { return web3 }, coinbase }
+
+        let networkID = await result.web3().eth.net.getNetworkType()
+            .catch(err => { throw new Error(`Unable to retrieve network ID, log: ${err}`) })
+        result = Object.assign(result, { networkID })
+
+        let balance = await result.web3().eth.getBalance(result.coinbase)
+            .catch(err => { throw new Error(`Unable to retrieve balance for address: ${result.coinbase}, log: ${err}`) })
+        result = Object.assign(result, { balance })
+
     } else {
-        reject(new Error('Unable to connect to Metamask'))
+        throw new Error('Unable to connect to Metamask')
     }
-}).then(result => {
-    return new Promise((resolve, reject) => {
-        result.web3().eth.net.getNetworkType((err, networkID) => {
-            if(err) {
-                reject(new Error('Unable to retrieve network ID'))
-            } else {
-                result = Object.assign({}, result, { networkID })
-                resolve(result)
-            }
-        })
-    })
-}).then(result => {
-    return new Promise((resolve, reject) => {
-        result.web3().eth.getBalance(result.coinbase, (err, balance) => {
-            if (err) {
-                reject(new Error(`Unable to retrieve balance for address: ${result.coinbase}`))
-            } else {
-                result = Object.assign({}, result, { balance })
-                resolve(result)
-            }
-        })
-    })
-})
+    return result
+}
 
 export const pollWeb3 = state => {
     let web3 = new Web3(window.web3.currentProvider)
