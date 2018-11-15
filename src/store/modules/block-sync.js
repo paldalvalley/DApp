@@ -21,18 +21,8 @@ const mutations = {
         state.web3 = web3Copy
         pollWeb3(state)
     },
-    changeCoinbase (state, payload) {
-        state.web3.coinbase = payload.coinbase
-        state.web3.balance = parseInt(payload.balance, 10)
-    },
     setContractInstance (state, payload) {
         state.contractInstance = () => payload
-    },
-    resetWeb3Instance (state) {
-        state.web3.web3Instance = null
-        state.web3.networkID = null
-        state.web3.coinbase = null
-        state.web3.balance = null
     }
 }
 

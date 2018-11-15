@@ -1,5 +1,4 @@
 import Web3 from 'web3'
-import store from '../../store'
 
 export const getWeb3 = async () => {
     let isUserConnected, result
@@ -31,21 +30,18 @@ export const pollWeb3 = state => {
 
     setInterval(async () => {
         if (typeof (await web3.eth.getAccounts())[0] === 'undefined') {
-            store.commit('blockSync/resetWeb3Instance')
-        } else if (state.web3.web3Instance) {
-            if ((await web3.eth.getAccounts())[0] !== state.web3.coinbase) {
+            clearWeb3Instance(state)
+        } else if (state.web3.web3Instance && ((await web3.eth.getAccounts())[0] !== state.web3.coinbase)) {
+            try {
                 let newCoinbase = (await web3.eth.getAccounts())[0]
-                web3.eth.getBalance(newCoinbase, (err, newBalance) => {
-                    if (err) {
-                        // 수정 필요
-                        console.log(err)
-                    } else {
-                        store.commit('blockSync/changeCoinbase', {
-                            coinbase: newCoinbase,
-                            balance: parseInt(newBalance, 10)
-                        })
-                    }
+                let newBalnce = await web3.eth.getBalance(newCoinbase)
+                changeCoinbase(state, {
+                    coinbase: newCoinbase,
+                    balance: parseInt(newBalnce, 10)
                 })
+            } catch (err) {
+                console.error('error occurred in pollWeb3', err)
+                throw err
             }
         } else {
             let web3Copy = state.web3
@@ -56,4 +52,16 @@ export const pollWeb3 = state => {
             state.web3 = web3Copy
         }
     }, 2000)
+}
+
+const changeCoinbase = (state, payload) => {
+    state.web3.coinbase = payload.coinbase
+    state.web3.balance = parseInt(payload.balance, 10)
+}
+
+const clearWeb3Instance = state => {
+    state.web3.web3Instance = null
+    state.web3.networkID = null
+    state.web3.coinbase = null
+    state.web3.balance = null
 }
