@@ -6,10 +6,11 @@ import { listingPlugin } from './plugins'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-    modules: {
-        blockSync,
-        listing,
-        search
-    },
-    plugins: [listingPlugin]
+  modules: {
+    blockSync,
+    listing,
+    search
+  },
+  plugins: [listingPlugin],
+
 })
