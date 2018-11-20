@@ -1,18 +1,18 @@
 <template>
     <div class="container">
         <b-card-group deck class="mb-3 row card-view" v-for="index in colIteration"
-                                                      :key="index">
+                      :key="index">
             <template v-if="index !== colIteration || !rowLastIteration">
                 <!-- computed로 받을 수는 없을까 생각 -->
                 <listing class="listing-elem" v-for="rowElem in maxRowContents"
-                                              :key="listingArray[rowElem + (maxRowContents * (index - 1)) - 1].listingID"
-                                              :listingIdx="rowElem + (maxRowContents * (index - 1)) - 1">
+                         :key="listingArray[rowElem + (maxRowContents * (index - 1)) - 1].listingID"
+                         :listingIdx="rowElem + (maxRowContents * (index - 1)) - 1">
                 </listing>
             </template>
             <template v-else>
                 <listing class="listing-elem" v-for="rowElem in rowLastIteration"
-                                              :key="listingArray[rowElem + (maxRowContents * (index - 1)) - 1].listingID"
-                                              :listingIdx="rowElem + (maxRowContents * (index - 1)) - 1">
+                         :key="listingArray[rowElem + (maxRowContents * (index - 1)) - 1].listingID"
+                         :listingIdx="rowElem + (maxRowContents * (index - 1)) - 1">
                 </listing>
             </template>
         </b-card-group>
@@ -20,36 +20,39 @@
 </template>
 
 <script>
-    import Listing from './Listing'
-    import { mapState } from 'vuex'
-    export default {
-        name: 'listings',
-        data () {
-            return {
-                maxRowContents: 3
-            }
-        },
-        computed: {
-            ...mapState({
-                contractInstance: state => state.blockSync.contractInstance,
-                listingArray: state => state.listing.listingArray
-            }),
-            colIteration () {
-                return Math.ceil(this.listingArray.length / this.maxRowContents)
-            },
-            rowLastIteration () {
-                return this.listingArray.length % this.maxRowContents
-            }
-        },
-        methods: {
-        },
-        components: {
-            Listing
-        },
-        beforeCreate() {
-            this.$store.dispatch('listing/loadAllListings')
-        }
+  import Listing from './Listing'
+  import { mapState } from 'vuex'
+  export default {
+    name: 'listings',
+    data () {
+      return {
+        maxRowContents: 3
+      }
+    },
+    computed: {
+      ...mapState({
+        contractInstance: state => state.blockSync.contractInstance,
+        listingArray: state => state.listing.listingArray
+      }),
+      colIteration () {
+        return Math.ceil(this.listingArray.length / this.maxRowContents)
+      },
+      rowLastIteration () {
+        return this.listingArray.length % this.maxRowContents
+      }
+    },
+    methods: {
+    },
+    components: {
+      Listing
+    },
+    async beforeCreate() {
+      await this.$store.dispatch('listing/loadAllListings')
+    },
+    async beforeUpdate() {
+      // await this.$store.dispatch('listing/loadAllListings')
     }
+  }
 </script>
 
 <style scoped>

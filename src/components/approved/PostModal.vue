@@ -80,7 +80,7 @@
 
 <script>
   import { lib } from '../../modules/lib'
-  import { mapState } from 'vuex'
+  import { mapState, mapActions } from 'vuex'
   export default {
     data () {
       return {
@@ -100,6 +100,9 @@
         'web3',
         'contractInstance'
       ]),
+      ...mapState('listing', [
+        'listingArray'
+      ]),
       contractMethods () {
         return this.contractInstance().methods
       }
@@ -114,8 +117,9 @@
         this.$refs.createForm.hide()
         await this.createListing(ipfsHash)
 
-        const data = await this.$store.dispatch('triggerListener')
+        const data = await this.$store.dispatch('listing/triggerListener')
         console.log(data)
+        console.log(this.listingArray)
         // * test load
         // let result = await lib.ipfsService.loadObjFromFile('QmXGQjjQKEiZDE9i7WcB8uwfQuAgEokFFQSw6KkAQvZnPM')
         // console.log(result)
@@ -123,7 +127,7 @@
       async createListing (ipfsHash) {
         try {
           let result = await this.contractMethods.createListing(ipfsHash).send({
-            gas: 1000000,
+            gas: 3000000,
             value: 0,
             from: this.web3.coinbase
           })
