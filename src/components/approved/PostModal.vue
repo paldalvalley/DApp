@@ -79,74 +79,75 @@
 </template>
 
 <script>
-    import { lib } from '../../modules/lib'
-    import { mapState } from 'vuex'
-    export default {
-        data () {
-            return {
-                formData: {
-                    title: '',
-                    description: '',
-                    nickname: '',
-                    age: 0,
-                    sex: -1,
-                    height: 0,
-                    weight: 0
-                }
-            }
-        },
-        computed: {
-            ...mapState('blockSync', [
-                'web3',
-                'contractInstance'
-            ]),
-            contractMethods () {
-                return this.contractInstance().methods
-            }
-        },
-        methods: {
-            triggerPostForm () {
-                this.$refs.createForm.show()
-            },
-            async submitForm(formData) {
-                let formInstance = this.assignFormInstance(formData)
-                let ipfsHash = await lib.ipfsService.saveObjAsFile(formInstance)
-                this.$refs.createForm.hide()
-                this.createListing(ipfsHash)
-
-                // * test load
-                // let result = await lib.ipfsService.loadObjFromFile('QmXGQjjQKEiZDE9i7WcB8uwfQuAgEokFFQSw6KkAQvZnPM')
-                // console.log(result)
-            },
-            async createListing (ipfsHash) {
-                try {
-                    let result = await this.contractMethods.createListing(ipfsHash).send({
-                        gas: 1000000,
-                        value: 0,
-                        from: this.web3.coinbase
-                    })
-                    console.log(result)
-                } catch (err) {
-                    throw console.error(err)
-                }
-            },
-            assignFormInstance (formData) {
-                let formInstance = Object.assign({}, formData)
-                this.clearForm()
-                return formInstance
-            },
-            clearForm () {
-                    this.formData.title = ''
-                    this.formData.description = ''
-                    this.formData.nickname = ''
-                    this.formData.age = 0
-                    this.formData.sex = -1
-                    this.formData.height = 0
-                    this.formData.weight = 0
-            }
-        },
-        mounted () {
-            this.$EventBus.$on('postFormClicked', this.triggerPostForm)
+  import { lib } from '../../modules/lib'
+  import { mapState } from 'vuex'
+  export default {
+    data () {
+      return {
+        formData: {
+          title: '',
+          description: '',
+          nickname: '',
+          age: 0,
+          sex: -1,
+          height: 0,
+          weight: 0
         }
+      }
+    },
+    computed: {
+      ...mapState('blockSync', [
+        'web3',
+        'contractInstance'
+      ]),
+      contractMethods () {
+        return this.contractInstance().methods
+      }
+    },
+    methods: {
+      triggerPostForm () {
+        this.$refs.createForm.show()
+      },
+      async submitForm(formData) {
+        let formInstance = this.assignFormInstance(formData)
+        let ipfsHash = await lib.ipfsService.saveObjAsFile(formInstance)
+        this.$refs.createForm.hide()
+        await this.createListing(ipfsHash)
+
+
+        // * test load
+        // let result = await lib.ipfsService.loadObjFromFile('QmXGQjjQKEiZDE9i7WcB8uwfQuAgEokFFQSw6KkAQvZnPM')
+        // console.log(result)
+      },
+      async createListing (ipfsHash) {
+        try {
+          let result = await this.contractMethods.createListing(ipfsHash).send({
+            gas: 1000000,
+            value: 0,
+            from: this.web3.coinbase
+          })
+          console.log(result)
+        } catch (err) {
+          throw console.error(err)
+        }
+      },
+      assignFormInstance (formData) {
+        let formInstance = Object.assign({}, formData)
+        this.clearForm()
+        return formInstance
+      },
+      clearForm () {
+        this.formData.title = ''
+        this.formData.description = ''
+        this.formData.nickname = ''
+        this.formData.age = 0
+        this.formData.sex = -1
+        this.formData.height = 0
+        this.formData.weight = 0
+      }
+    },
+    mounted () {
+      this.$EventBus.$on('postFormClicked', this.triggerPostForm)
     }
+  }
 </script>
