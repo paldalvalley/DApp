@@ -114,7 +114,8 @@
         this.$refs.createForm.hide()
         await this.createListing(ipfsHash)
 
-
+        const data = await this.$store.dispatch('triggerListener')
+        console.log(data)
         // * test load
         // let result = await lib.ipfsService.loadObjFromFile('QmXGQjjQKEiZDE9i7WcB8uwfQuAgEokFFQSw6KkAQvZnPM')
         // console.log(result)
