@@ -26,7 +26,10 @@ const actions = {
   },
   async triggerListener ({ commit }) {
     const { data } = await axios.post('http://192.168.0.34:3000/api/create', {})
-    commit('setListingArray', data)
+
+    // const filter = { listingID: data }
+    let listingArray = await this.getEventsFromBlock('ListingCreated', filter)
+    commit('setListingArray', listingArray)
     return data
   }
 }

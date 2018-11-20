@@ -80,7 +80,7 @@
 
 <script>
   import { lib } from '../../modules/lib'
-  import { mapState, mapActions } from 'vuex'
+  import { mapState } from 'vuex'
   export default {
     data () {
       return {

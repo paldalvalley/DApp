@@ -48,9 +48,6 @@
     },
     async beforeCreate() {
       await this.$store.dispatch('listing/loadAllListings')
-    },
-    async beforeUpdate() {
-      // await this.$store.dispatch('listing/loadAllListings')
     }
   }
 </script>
