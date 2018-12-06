@@ -151,7 +151,7 @@
       }
     },
     mounted () {
-      this.$EventBus.$on('postFormClicked', this.triggerPostForm)
+      this.$EventBus.$on('postButtonClicked', this.triggerPostForm)
     }
   }
 </script>

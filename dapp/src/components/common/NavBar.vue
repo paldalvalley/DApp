@@ -32,7 +32,7 @@
         name: 'nav-bar',
         methods: {
             triggerPostForm () {
-                this.$EventBus.$emit('postFormClicked')
+                this.$EventBus.$emit('postButtonClicked')
             }
         },
         computed: {
