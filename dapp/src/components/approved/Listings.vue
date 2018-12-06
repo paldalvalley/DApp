@@ -41,8 +41,6 @@
         return this.listingArray.length % this.maxRowContents
       }
     },
-    methods: {
-    },
     components: {
       Listing
     },
