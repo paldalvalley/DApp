@@ -5,7 +5,7 @@
         <p class="card-text">나이: {{ data.age}}</p>
         <p class="card-text">키: {{ data.height }}</p>
         <p class="card-text">몸무게: {{ data.weight }}</p>
-        <button>구매</button>
+        <button @click="triggerBuyForm">구매</button>
     </b-card>
 </template>
 
@@ -27,7 +27,9 @@
         else if (sex === 1) return '남성'
         else return '성별 없음'
       },
-
+      triggerBuyForm () {
+        this.$EventBus.$emit('buyButtonClicked')
+      }
     },
     props: {
       listingIdx: {
