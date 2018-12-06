@@ -112,17 +112,16 @@
         this.$refs.createForm.show()
       },
       async submitForm(formData) {
-        let formInstance = this.assignFormInstance(formData)
-        let ipfsHash = await lib.ipfsService.saveObjAsFile(formInstance)
-        this.$refs.createForm.hide()
-        await this.createListing(ipfsHash)
+        try {
+          let formInstance = this.assignFormInstance(formData)
+          let ipfsHash = await lib.ipfsService.saveObjAsFile(formInstance)
+          this.$refs.createForm.hide()
+          await this.createListing(ipfsHash)
 
-        const data = await this.$store.dispatch('listing/triggerListener')
-        console.log(data)
-        console.log(this.listingArray)
-        // * test load
-        // let result = await lib.ipfsService.loadObjFromFile('QmXGQjjQKEiZDE9i7WcB8uwfQuAgEokFFQSw6KkAQvZnPM')
-        // console.log(result)
+          await this.$store.dispatch('listing/triggerListener')
+        } catch (err) {
+          console.log(err)
+        }
       },
       async createListing (ipfsHash) {
         try {
