@@ -10,28 +10,29 @@
 </template>
 
 <script>
-    import { mapState } from 'vuex'
-    export default {
-        name: 'listing',
-        computed: {
-            ...mapState('listing', [
-                'listingArray'
-            ]),
-            data () {
-                return this.listingArray[this.listingIdx].data
-            }
-        },
-        methods: {
-            checkSex (sex) {
-                if (sex === 0) return '여성'
-                else if (sex === 1) return '남성'
-                else return '성별 없음'
-            }
-        },
-        props: {
-            listingIdx: {
-                type: Number
-            }
-        }
+  import { mapState } from 'vuex'
+  export default {
+    name: 'listing',
+    computed: {
+      ...mapState('listing', [
+        'listingArray'
+      ]),
+      data () {
+        return this.listingArray[this.listingIdx].data
+      }
+    },
+    methods: {
+      checkSex (sex) {
+        if (sex === 0) return '여성'
+        else if (sex === 1) return '남성'
+        else return '성별 없음'
+      },
+
+    },
+    props: {
+      listingIdx: {
+        type: Number
+      }
     }
+  }
 </script>
