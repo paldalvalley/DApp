@@ -5,6 +5,7 @@
         <p class="card-text">나이: {{ data.age}}</p>
         <p class="card-text">키: {{ data.height }}</p>
         <p class="card-text">몸무게: {{ data.weight }}</p>
+        <button>구매</button>
     </b-card>
 </template>
 
