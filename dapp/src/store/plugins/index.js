@@ -14,6 +14,9 @@ export const listingPlugin = store => {
             .contractInstance()
             .getPastEvents(eventName, option)
 
+        console.log('events is ')
+        console.log(events)
+
         for (let i in events) {
             const listingData = events[i].returnValues
             const obj = Object.assign(
@@ -23,9 +26,6 @@ export const listingPlugin = store => {
             listingArray.push(obj)
             listingArray[i].data = await lib.ipfsService.loadObjFromFile(listingArray[i].ipfsHash)
         }
-
-        console.log(listingArray)
-
         return listingArray
     }
 }
