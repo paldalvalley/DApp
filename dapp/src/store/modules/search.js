@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const actions = {
     async loadSearchedListings({ commit }, formData) {
-        const url = `http://192.168.0.34:3000/api/search`
+        const url = `http://192.168.43.236:3000/api/search`
         const eventName = 'ListingCreated'
         try {
             // ajax req to database server
