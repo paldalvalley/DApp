@@ -6,12 +6,14 @@
                 <!-- computed로 받을 수는 없을까 생각 -->
                 <listing class="listing-elem" v-for="rowElem in maxRowContents"
                          :key="listingArray[rowElem + (maxRowContents * (index - 1)) - 1].listingID"
+                         :listingID="listingArray[rowElem + (maxRowContents * (index - 1)) - 1].listingID"
                          :listingIdx="rowElem + (maxRowContents * (index - 1)) - 1">
                 </listing>
             </template>
             <template v-else>
                 <listing class="listing-elem" v-for="rowElem in rowLastIteration"
                          :key="listingArray[rowElem + (maxRowContents * (index - 1)) - 1].listingID"
+                         :listingID="listingArray[rowElem + (maxRowContents * (index - 1)) - 1].listingID"
                          :listingIdx="rowElem + (maxRowContents * (index - 1)) - 1">
                 </listing>
             </template>
@@ -21,7 +23,7 @@
 
 <script>
   import Listing from './Listing'
-  import { mapState } from 'vuex'
+  import { mapState, mapGetters } from 'vuex'
   export default {
     name: 'listings',
     data () {
@@ -30,10 +32,9 @@
       }
     },
     computed: {
-      ...mapState({
-        contractInstance: state => state.blockSync.contractInstance,
-        listingArray: state => state.listing.listingArray
-      }),
+      ...mapState('listing', [
+        'listingArray'
+      ]),
       colIteration () {
         return Math.ceil(this.listingArray.length / this.maxRowContents)
       },
