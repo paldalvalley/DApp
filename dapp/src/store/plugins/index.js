@@ -1,6 +1,8 @@
 import { lib } from '../../modules/lib'
+import {getEventsFromBlock } from '../../utils/getEventFromBlock'
 
 export const listingPlugin = store => {
+    // store.getEventsFromBlock = getEventsFromBlock
     store.getEventsFromBlock = async (eventName, filter) => {
         let listingArray = []
         const option = {
