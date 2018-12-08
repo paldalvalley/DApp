@@ -80,7 +80,7 @@
 
 <script>
   import { lib } from '../../modules/lib'
-  import { mapState } from 'vuex'
+  import { mapState, mapGetters } from 'vuex'
   export default {
     data () {
       return {
@@ -103,9 +103,9 @@
       ...mapState('listing', [
         'listingArray'
       ]),
-      contractMethods () {
-        return this.contractInstance().methods
-      }
+      ...mapGetters('blockSync', [
+        'contractMethods'
+      ])
     },
     methods: {
       triggerPostForm () {
@@ -117,8 +117,13 @@
           let ipfsHash = await lib.ipfsService.saveObjAsFile(formInstance)
           this.$refs.createForm.hide()
           await this.createListing(ipfsHash)
+          const myLumy = await this.contractMethods.balanceOf(this.web3.coinbase).call()
+          alert(`글 등록 완료!\n보상: 50LMT\n잔여 루미: ${myLumy}LMT`)
 
-          await this.$store.dispatch('listing/triggerListener')
+          await this.$store.dispatch('listing/loadAllListings')
+          // window.location.replace('/')
+          // 리스너 살린후 주석 풀기
+          // await this.$store.dispatch('listing/triggerListener')
         } catch (err) {
           console.log(err)
         }
