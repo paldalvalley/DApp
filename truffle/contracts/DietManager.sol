@@ -22,6 +22,8 @@ contract DietManager is Ownable {
         address seller;
     }
 
+    mapping(address => mapping(uint => bool)) buyerHasListing;
+
     LoomyToken public token;
     address private owner;
 
@@ -32,8 +34,9 @@ contract DietManager is Ownable {
     }
 
     function createListing (string _ipfsHash) public {
-        token.transferFrom(owner, msg.sender, 100);
+        token.transferFrom(owner, msg.sender, 50);
         _createListing(msg.sender, _ipfsHash);
+        buyerHasListing[msg.sender][listings.length - 1] = true;
     }
 
     function _createListing (address _seller, string _ipfsHash) internal {
@@ -41,6 +44,19 @@ contract DietManager is Ownable {
             seller : _seller
             }));
 
-        emit ListingCreated(_seller, listings.length-1, _ipfsHash);
+        emit ListingCreated(_seller, listings.length - 1, _ipfsHash);
+    }
+
+    function buyListing (uint _listingID, address seller) {
+        token.transferFrom(msg.sender, seller, 30);
+        buyerHasListing[msg.sender][_listingID] = true;
+    }
+
+    function checkBuyerOwnership (uint _listingID) public view returns (bool) {
+        return buyerHasListing[msg.sender][_listingID];
+    }
+
+    function balanceOf(address owner) public view returns (uint256) {
+        return token.balanceOf(owner);
     }
 }
