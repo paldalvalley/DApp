@@ -1,4 +1,6 @@
 import Web3 from 'web3'
+import listing from '../../store/modules/listing'
+import { getEventsFromBlock } from '../../utils/getEventFromBlock'
 
 export const getWeb3 = async () => {
     let isUserConnected, result
@@ -39,6 +41,7 @@ export const pollWeb3 = state => {
                     coinbase: newCoinbase,
                     balance: parseInt(newBalnce, 10)
                 })
+                window.location.replace('/')
             } catch (err) {
                 console.error('error occurred in pollWeb3', err)
                 throw err
