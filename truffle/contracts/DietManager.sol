@@ -39,9 +39,9 @@ contract DietManager is Ownable {
         buyerHasListing[msg.sender][listings.length - 1] = true;
     }
 
-    function _createListing (address _seller, string _ipfsHash) internal {
+    function _createListing (address _user, string _ipfsHash) internal {
         listings.push(Listing({
-            seller : _seller
+            seller : _user
             }));
 
         emit ListingCreated(_seller, listings.length - 1, _ipfsHash);
